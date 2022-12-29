@@ -1,22 +1,29 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"net/http"
+	"strconv"
+)
 
 func main() {
-	var n int
-	fmt.Print("n")
-	_, err := fmt.Scanf("%d", &n)
-	if err != nil {
-		fmt.Println(err)
+	http.HandleFunc("/fib", f)
+	http.ListenAndServe(":8080", nil)
+}
+func f(w http.ResponseWriter, r *http.Request) {
+	s := r.URL.Query().Get("n")
+	n, e := strconv.Atoi(s)
+	if e != nil {
+		http.Error(w, "Invalid parameter", http.StatusBadRequest)
 		return
 	}
-	fib := fibonacci(n)
-	fmt.Printf("n %d is %d\n", n, fib)
-}
-
-func fibonacci(n int) int {
-	if n == 0 || n == 1 {
-		return n
+	a, b := 0, 1
+	for i := 0; i < n; i++ {
+		a, b = b, a+b
 	}
-	return fibonacci(n-1) + fibonacci(n-2)
+	w.Header().Set("Content-Type", "text/plain")
+	fmt.Fprintf(w, "%d", a)
+	fmt.Fprintf(w, "%s", "\n Pawel Wojcik")
+	fmt.Fprintf(w, "%s", "\n Fibonacci")
+	fmt.Fprintf(w, "%s", "\n 2.1.5")
 }
