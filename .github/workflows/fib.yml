@@ -45,7 +45,7 @@ jobs:
         with:
           cache-from: type=registry,mode=max,ref=353362/fibcalc:cache
           cache-to: type=registry,mode=max,ref=353362/fibcalc:cache
-          context: Fibonacci
+          context: .
           platforms: linux/amd64, linux/arm64
           push: true
           tags: ${{ steps.meta.outputs.tags }}
