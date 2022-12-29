@@ -1,0 +1,9 @@
+version: '3'
+services:
+  fib:
+    image: ghcr.io/pawelwojcik7/fibonacci:latest
+    platform: linux/arm64
+    container_name: testarm64
+    restart: unless-stopped
+    expose:
+    - "8080"
